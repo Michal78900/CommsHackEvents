@@ -1,4 +1,4 @@
-﻿namespace RoundLocker
+﻿namespace CommsHackEvents
 {
     using System;
     using Exiled.API.Features;
@@ -7,10 +7,9 @@
     using MapEvent = Exiled.Events.Handlers.Map;
     using WarheadEvent = Exiled.Events.Handlers.Warhead;
 
-    public class RoundLocker : Plugin<Config>
+    public class CommsHackEvents : Plugin<Config>
     {
-        public static RoundLocker Singleton;
-
+        public static CommsHackEvents Singleton;
         public override string Author => "Michal78900";
         public override Version Version => new Version(1, 0, 0);
 

@@ -1,4 +1,4 @@
-﻿namespace RoundLocker
+﻿namespace CommsHackEvents
 {
     using CommsHack;
     using Dissonance;
@@ -9,7 +9,7 @@
 
     public class Handler
     {
-        private static readonly Config Config = RoundLocker.Singleton.Config;
+        private static readonly Config Config = CommsHackEvents.Singleton.Config;
 
         internal void OnRoundStarted()
         {

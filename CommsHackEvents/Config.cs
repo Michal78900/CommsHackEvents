@@ -1,6 +1,5 @@
-﻿namespace RoundLocker
+﻿namespace CommsHackEvents
 {
-    using CommsHackEvents;
     using Exiled.API.Interfaces;
     using System.ComponentModel;
 
