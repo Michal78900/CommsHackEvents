@@ -10,7 +10,7 @@ For example, if it is a folder named "FunnyFolder" on your desktop the path will
 Write a path here: `directory_path: C:\Users\User\Desktop\FunnyFolder`
 
 ## Step 2:
-Put your files in a selected folder. The file extension should  `.mp3`.
+Put your files in a selected folder. The file extension should  `.mp3` or `.raw`.
 
 ## Step 3:
 Now choose the event in which you want to play the sound and give a filename and a sound volume.
