@@ -64,16 +64,16 @@
                     StopSound(); break;
 
                 case EventType.RoundStarted:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.RoundStarted.FileName}", Config.RoundStarted.Volume); break;
+                    AudioAPI.API.PlayFile($@"{pathToFile}{Config.RoundStarted.FileName}", Config.RoundStarted.Volume); break;
 
                 case EventType.NtfEntrance:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.NtfEntrance.FileName}", Config.NtfEntrance.Volume); break;
+                    AudioAPI.API.PlayFile($@"{pathToFile}{Config.NtfEntrance.FileName}", Config.NtfEntrance.Volume); break;
 
                 case EventType.CiEntrance:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.CiEntrance.FileName}", Config.CiEntrance.Volume); break;
+                    AudioAPI.API.PlayFile($@"{pathToFile}{Config.CiEntrance.FileName}", Config.CiEntrance.Volume); break;
 
                 case EventType.StartingWarhead:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.WarheadStart.FileName}", Config.WarheadStart.Volume); break;
+                    AudioAPI.API.PlayFile($@"{pathToFile}{Config.WarheadStart.FileName}", Config.WarheadStart.Volume); break;
             }
         }
 
