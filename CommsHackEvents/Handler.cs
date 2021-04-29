@@ -3,7 +3,6 @@
     using CommsHack;
     using Dissonance;
     using Dissonance.Audio.Capture;
-    using Exiled.API.Features;
     using Exiled.Events.EventArgs;
     using Respawning;
     using UnityEngine;
@@ -57,7 +56,7 @@
 
         private void Play(EventType eventType)
         {
-            string filePath = $@"{CommsHackEvents.dirPath}\";
+            string filePath = $"{CommsHackEvents.dirPath}/";
             float volume = 1f;
 
             switch (eventType)
