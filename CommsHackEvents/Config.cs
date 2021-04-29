@@ -8,9 +8,6 @@
         [Description("Is the plugin enabled.")]
         public bool IsEnabled { get; set; } = true;
 
-        [Description("Directory path, where your sounds / music are stored.")]
-        public string DirectoryPath { get; private set; } = "";
-
         [Description("Called when the round have started:")]
         public AudioFile RoundStarted { get; private set; } = new AudioFile();
 

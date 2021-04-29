@@ -3,6 +3,7 @@
     using CommsHack;
     using Dissonance;
     using Dissonance.Audio.Capture;
+    using Exiled.API.Features;
     using Exiled.Events.EventArgs;
     using Respawning;
     using UnityEngine;
@@ -56,24 +57,34 @@
 
         private void Play(EventType eventType)
         {
-            string pathToFile = Config.DirectoryPath;
+            string filePath = $@"{CommsHackEvents.dirPath}\";
+            float volume = 1f;
 
             switch (eventType)
             {
                 case EventType.StopSound:
-                    StopSound(); break;
+                    StopSound(); return;
 
                 case EventType.RoundStarted:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.RoundStarted.FileName}", Config.RoundStarted.Volume); break;
+                    filePath += Config.RoundStarted.FileName; volume = Config.RoundStarted.Volume; break;
 
                 case EventType.NtfEntrance:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.NtfEntrance.FileName}", Config.NtfEntrance.Volume); break;
+                    filePath += Config.NtfEntrance.FileName; volume = Config.NtfEntrance.Volume; break;
 
                 case EventType.CiEntrance:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.CiEntrance.FileName}", Config.CiEntrance.Volume); break;
+                    filePath += Config.CiEntrance.FileName; volume = Config.CiEntrance.Volume; break;
 
                 case EventType.StartingWarhead:
-                    AudioAPI.API.PlayFile($@"{pathToFile}\{Config.WarheadStart.FileName}", Config.WarheadStart.Volume); break;
+                    filePath += Config.WarheadStart.FileName; volume = Config.WarheadStart.Volume; break;
+            }
+
+            if (filePath.EndsWith(".raw"))
+            {
+                AudioAPI.API.PlayFileRaw(filePath, volume);
+            }
+            else
+            {
+                AudioAPI.API.PlayFile(filePath, volume);
             }
         }
 
@@ -87,7 +98,7 @@
                     mic.StopCapture();
                 Object.Destroy((Component)mic);
             }
-            
+
             var capt = comms.gameObject.GetComponent<FloatArrayCapture>();
             capt.StopCapture();
         }
