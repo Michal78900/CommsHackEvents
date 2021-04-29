@@ -1,38 +1,39 @@
 # How to configure
 
 ## Step 0:
-This plugin requires [CommsHack](https://github.com/VirtualBrightPlayz/CommsHack) plugin by Virtual to work. Install it first before using the CommsHackEvents plugin. It's recommended to setup up the CommsHack config too.
+This plugin requires [CommsHack](https://github.com/VirtualBrightPlayz/CommsHack) plugin by Virtual to work. Install it before using the CommsHackEvents plugin. It's recommended to setup up the CommsHack config as well.
 
-Both of plugins require from you to convert `.mp3` files to `.raw` format. To do this you need to use some kind of converter for example **ffmpeg** that you can [download from here.](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z) You only need the executable and you can get rid of the other files.
+Both plugins require the files to be converted from `.mp3` to `.raw` format. To do this you need to use a converter such as **ffmpeg** that you can [download from here.](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z) You will only need the executable and you can get rid of the other files.
 
 
 ## Step 1:
-In your `EXILED/Configs` folder the `CommsHackAudio` directory will be generated, when the plugin is first run. This is the folder where you're gonna to put your audio files.
+After running your server with the plugin installed, the `CommsHackAudio` folder will be generated in the `EXILED/Configs` folder. This is the folder where you're going to put your audio files.
 
-### Now I will show the 2 methods of converting `.mp3` file to `.raw` using `ffmpeg.exe`
-*Keep in mind that you only need to convert the file once, then you don't need to convert it once again so you can use one with `.raw` extension in a config.*
+### Here are 2 methods of converting `.mp3` file to `.raw` using `ffmpeg.exe`
+*Keep in mind that you only need to convert the file once, you don't need to convert it again.
 
-***Method 1: Using the `ffmpeg.exe` in-game:***
-In base CommsHack plugin you need to give a full path to `ffmpeg.exe` in `f_f_m_p_e_g` config option. For example: `f_f_m_p_e_g: C:\Users\User\AppData\Roaming\EXILED\Configs\CommsHackAudio\ffmpeg.exe`.
-**The executable must be in the CommsHackAudio folder.**
+***Method 1: Convert Using CommsHack***
+In the base CommsHack plugin set your `comms_file:` path to `C:\Users\User\AppData\Roaming\EXILED\Configs\CommsHackAudio\`. (or wherever the CommsHackAudio folder is located)
+You can also just leave the path the same and manually move the converted files to the `CommsHackAudio` folder.
 
-Now every time when the plugin tries to run a `.mp3` file it will automatically convert it to `.raw` file and use that one.
+Now every time the plugin runs a `.mp3` file (ie you run `audio` command from CommsHack) it will automatically convert it to a `.raw` file and use that one.
 
-***Method 2: Converting the file yourself:***
-You need to run the `ffmpeg.exe` via Windows CMD / Linux Terminal. You open one of these in a directory where the executable is located and type this, replacing `name` with the name of the file:
+
+***Method 2: Converting the File Manually:***
+With this method you manually run the `ffmpeg.exe` via Windows CMD / Linux Terminal. To do this go to the directory where the executable is located and type the following, replacing `example.mp3` with your file name:
 ```
-ffmpeg.exe -i "name.mp3" -f f32le -ar 48000 -ac 1 name.mp3.raw
+ffmpeg.exe -i "example.mp3" -f f32le -ar 48000 -ac 1 example.mp3.raw
 ```
-Via this method you don't need to use the executable in game and you don't need to state path to it in base CommsHack.
+Using this method you don't need manually use the CommsHacks plugin and run it in-game.
 
 ## Step 2:
 Put your files in a `CommsHackAudio` folder if they aren't there already. The file extension should  `.mp3` or `.raw` (.mp3.raw).
 
 The `raw` files will not run the `ffmpeg.exe`
-The `.mp3` will run the executable every time, so as I said earlier once the file have been converted you can switch to `.raw` to prevent that.
+The `.mp3` will run the executable every time, so as said earlier once the file has been converted you can switch to `.raw` file to prevent running it every time and improve efficiency and latency between when the event happens and the audio plays.
 
 ## Step 3:
-Now choose the event in which you want to play the sound and give a file name and a sound volume.
+Now choose the event that you would like to play the sound from and then input the file name and volume.
 ```
 List of currently supported events:
 - Round started
@@ -44,16 +45,15 @@ Example:
 ```yml
   # Called when the NTF are spawned:
   ntf_entrance:
-    file_name: epsilon-old.mp3
+    file_name: example.mp3.raw
     volume: 0.3
  ```
-This will cause to play `epsilon-old.mp3` located in your `directory_path` when the NTF are respawned.
-Since the file has `.mp3` extension it will be converted to `.raw` format if you are using the first method of file converstion.
+This will play the `example.mp3.raw` located in your `CommsHackAudio` folder when NTF are respawned.
 
 ## Step 4:
 Now listen carefully, because this is the most important step:
-**TEST THE MUSIC / SOUND BEFORE PUTTING IT ON A PUBLIC SERVER, BECAUSE IF IT IS TOO LOUD, NORTHWOOD WILL YEET YOUR SERVER OUT OF THE SERVER LIST. YOU HAVE BEEN WARNED.**
-*Note: Does not apply if your server is not on a Verified Server List.*
+**TEST THE MUSIC / SOUND BEFORE PUTTING IT ON A PUBLIC SERVER!!! IF IT IS TOO LOUD NORTHWOOD WILL YEET YOUR SERVER FROM THE SERVER LIST. YOU HAVE BEEN WARNED!**
+*Note: Does not apply if your server is not on a Verified Server List but it is a general rule of thumb not to earrape players on your server.*
 
 ## Step 5:
-Congratulations, you've configured the plugin and it's ready to go.
+Congratulations! You have configured the plugin and it should be ready to go.
