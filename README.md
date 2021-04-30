@@ -13,7 +13,7 @@ After running your server with the plugin installed, the `CommsHackAudio` folder
 *Keep in mind that you only need to convert the file once, you don't need to convert it again.
 
 ***Method 1: Convert Using CommsHack***
-In the base CommsHack plugin set your `comms_file:` path to `C:\Users\User\AppData\Roaming\EXILED\Configs\CommsHackAudio\`. (or wherever the CommsHackAudio folder is located)
+In the base CommsHack plugin set your `f_f_m_p_e_g:` path to `C:/Users/User/AppData/Roaming/EXILED/Configs/CommsHackAudio/ffpmeg.exe`. (or wherever the CommsHackAudio folder is located)
 You can also just leave the path the same and manually move the converted files to the `CommsHackAudio` folder.
 
 Now every time the plugin runs a `.mp3` file (ie you run `audio` command from CommsHack) it will automatically convert it to a `.raw` file and use that one.
