@@ -4,87 +4,82 @@
     using Dissonance;
     using Dissonance.Audio.Capture;
     using Exiled.Events.EventArgs;
+    using MEC;
     using Respawning;
     using UnityEngine;
+
+    using Log = Exiled.API.Features.Log;
 
     public class Handler
     {
         private static readonly Config Config = CommsHackEvents.Singleton.Config;
 
-        internal void OnRoundStarted()
-        {
-            if (!string.IsNullOrEmpty(Config.RoundStarted.FileName))
-                Play(EventType.RoundStarted);
-        }
+        private readonly System.Random rng = new System.Random();
+
+        internal void OnWaitingForPlayers() => Play(Config.WaitingForPlayers);
+
+        internal void OnRoundStarted() => Play(Config.RoundStarted);
 
         internal void OnAnnouncingNtfEntrance(AnnouncingNtfEntranceEventArgs ev)
         {
-            if (!string.IsNullOrEmpty(Config.NtfEntrance.FileName))
-            {
-                ev.IsAllowed = false;
+            ev.IsAllowed = Config.NtfEntrance.FileName.Count == 0;
 
-                Play(EventType.NtfEntrance);
-            }
+            Play(Config.NtfEntrance);
         }
 
         internal void OnTeamRespawn(RespawningTeamEventArgs ev)
         {
-            if (!string.IsNullOrEmpty(Config.CiEntrance.FileName) &&
-                ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency)
+            if (ev.NextKnownTeam == SpawnableTeamType.ChaosInsurgency)
             {
-                Play(EventType.CiEntrance);
+                Play(Config.CiEntrance);
             }
         }
 
-        internal void OnStartingWarhead(StartingEventArgs ev)
-        {
-            if (!string.IsNullOrEmpty(Config.WarheadStart.FileName))
-                Play(EventType.StartingWarhead);
-        }
+        internal void OnGeneratorActivated(GeneratorActivatedEventArgs ev) => Play(Config.GeneratorActivated);
 
-        internal void OnStoppingWarhead(StoppingEventArgs ev)
-        {
-            if (!string.IsNullOrEmpty(Config.WarheadStart.FileName))
-                Play(EventType.StopSound);
-        }
+        internal void OnStartingWarhead(StartingEventArgs ev) => Play(Config.WarheadStart);
 
-        internal void OnDetonated()
-        {
-            if (!string.IsNullOrEmpty(Config.WarheadStart.FileName))
-                Play(EventType.StopSound);
-        }
+        internal void OnStoppingWarhead(StoppingEventArgs ev) => Play(Config.WarheadCancel);
 
-        private void Play(EventType eventType)
-        {
-            string filePath = $"{CommsHackEvents.dirPath}/";
-            float volume = 1f;
+        internal void OnDetonated() => Play(Config.WarheadDetonated);
 
-            switch (eventType)
+        internal void OnDecontaminating(DecontaminatingEventArgs ev) => Play(Config.DecontaminationStart);
+
+        internal void OnRoundEnd(RoundEndedEventArgs ev) => Play(Config.RoundEnded);
+
+        private void Play(AudioFile audioFile)
+        {
+            if (audioFile.Delay < 0 || audioFile.Delay < 0)
             {
-                case EventType.StopSound:
-                    StopSound(); return;
-
-                case EventType.RoundStarted:
-                    filePath += Config.RoundStarted.FileName; volume = Config.RoundStarted.Volume; break;
-
-                case EventType.NtfEntrance:
-                    filePath += Config.NtfEntrance.FileName; volume = Config.NtfEntrance.Volume; break;
-
-                case EventType.CiEntrance:
-                    filePath += Config.CiEntrance.FileName; volume = Config.CiEntrance.Volume; break;
-
-                case EventType.StartingWarhead:
-                    filePath += Config.WarheadStart.FileName; volume = Config.WarheadStart.Volume; break;
+                Log.Debug($"Sound or delay is set to less than zero, stopping sound...", Config.Debug);
+                StopSound();
+                Log.Debug($"Sound have been stopped.", Config.Debug);
+                return;
             }
 
-            if (filePath.EndsWith(".raw"))
+            if (audioFile.FileName.Count == 0)
             {
-                AudioAPI.API.PlayFileRaw(filePath, volume);
+                Log.Debug($"The file_name contains no elements, returning...", Config.Debug);
+                return;
             }
-            else
+
+            string filePath = $"{CommsHackEvents.dirPath}/{audioFile.FileName[rng.Next(audioFile.FileName.Count)]}";
+            float volume = audioFile.Volume;
+
+            Log.Debug($"I will play the sound in {audioFile.Delay} seconds...", Config.Debug);
+            Timing.CallDelayed(audioFile.Delay, () =>
             {
-                AudioAPI.API.PlayFile(filePath, volume);
-            }
+                if (filePath.EndsWith(".raw"))
+                {
+                    Log.Debug("The file ends with .raw, so it is converted, playing...", Config.Debug);
+                    AudioAPI.API.PlayFileRaw(filePath, volume);
+                }
+                else
+                {
+                    Log.Debug("The file isn't converted. Converting and playing...", Config.Debug);
+                    AudioAPI.API.PlayFile(filePath, volume);
+                }
+            });
         }
 
         private void StopSound()
@@ -100,15 +95,6 @@
 
             var capt = comms.gameObject.GetComponent<FloatArrayCapture>();
             capt.StopCapture();
-        }
-
-        private enum EventType
-        {
-            StopSound = -1,
-            RoundStarted = 0,
-            NtfEntrance = 1,
-            CiEntrance = 2,
-            StartingWarhead = 3,
         }
     }
 }

@@ -15,7 +15,7 @@ After running your server with the plugin installed, the `CommsHackAudio` folder
 ***Method 1: Convert Using CommsHack***
 In the base CommsHack plugin set your `f_f_m_p_e_g:` path to `ffpmeg.exe`, for example `C:/Users/User/AppData/Roaming/EXILED/Configs/CommsHackAudio/ffpmeg.exe`. (or wherever the CommsHackAudio folder is located)
 
-Now every time the plugin runs a `.mp3` file (ie you run `audio` command from CommsHack or whem the certain event occurs) it will automatically convert it to a `.raw` file and use that one.
+Now every time the plugin runs a `.mp3` file (ie you run `audio` command from CommsHack or when the certain event occurs) it will automatically convert it to a `.raw` file and use that one.
 
 
 ***Method 2: Converting the File Manually:***
@@ -32,22 +32,18 @@ The `raw` files will not run the `ffmpeg.exe`
 The `.mp3` will run the executable every time, so as said earlier once the file has been converted you can switch to `.raw` file to prevent running it every time and improve efficiency and latency between when the event happens and the audio plays.
 
 ## Step 3:
-Now choose the event that you would like to play the sound from and then input the file name and volume.
-```
-List of currently supported events:
-- Round started
-- NTF respawn
-- CI respawn
-- Warhead started
-```
+Now choose the event that you would like to play the sound from and then input the file name , the volume, and the delay.
 Example:
 ```yml
   # Called when the NTF are spawned:
   ntf_entrance:
     file_name: example.mp3.raw
     volume: 0.3
+    delay: 0
  ```
-This will play the `example.mp3.raw` located in your `CommsHackAudio` folder when NTF are respawned.
+This will play the `example.mp3.raw` located in your `CommsHackAudio` folder when NTF are respawned. Since delay is set to `0` there won't be any delay.
+
+Setting either `delay` or `volume` to negative number will now change the event into "sound stopping event". When the event is called currently playing sound will be stopped.
 
 ## Step 4:
 Now listen carefully, because this is the most important step:
