@@ -37,7 +37,8 @@ Example:
 ```yml
   # Called when the NTF are spawned:
   ntf_entrance:
-    file_name: example.mp3.raw
+    file_name: 
+    - example.mp3.raw
     volume: 0.3
     delay: 0
  ```
